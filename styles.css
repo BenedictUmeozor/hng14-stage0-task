@@ -113,6 +113,29 @@ body {
     opacity: 1;
 }
 
+/* Priority Indicator (Left Border) */
+.priority-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    border-radius: 16px 0 0 16px;
+    transition: all var(--transition-base);
+}
+
+.priority-indicator.priority-low {
+    background: var(--color-priority-low);
+}
+
+.priority-indicator.priority-medium {
+    background: var(--color-priority-medium);
+}
+
+.priority-indicator.priority-high {
+    background: var(--color-priority-high);
+}
+
 /* Completed State */
 .todo-card.completed {
     opacity: 0.7;
@@ -126,6 +149,20 @@ body {
 .todo-card.completed .status-badge {
     background: var(--color-status-done);
     color: white;
+}
+
+/* Overdue State */
+.todo-card.overdue {
+    border-color: rgba(196, 69, 54, 0.3);
+}
+
+.todo-card.overdue .priority-indicator {
+    background: #c44536;
+}
+
+/* Edit Mode Active */
+.todo-card.edit-mode {
+    padding: var(--space-lg);
 }
 
 /* Header Section */
@@ -374,6 +411,124 @@ body {
     opacity: 0.5;
 }
 
+/* Status Control */
+.status-control {
+    padding: 0.375rem 0.75rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b5d54' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    padding-right: 2rem;
+}
+
+.status-control:hover {
+    border-color: var(--color-accent);
+    background-color: var(--color-card);
+}
+
+.status-control:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* Expand/Collapse */
+.description-container {
+    position: relative;
+}
+
+.collapsible-section {
+    overflow: hidden;
+    transition: max-height var(--transition-slow) ease-out;
+}
+
+.collapsible-section.collapsed {
+    max-height: 4.5em;
+    position: relative;
+}
+
+.collapsible-section.collapsed::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2em;
+    background: linear-gradient(to bottom, transparent, var(--color-card));
+}
+
+.expand-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0;
+    background: transparent;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin-bottom: var(--space-md);
+}
+
+.expand-toggle:hover {
+    color: var(--color-accent-dark);
+    gap: 0.5rem;
+}
+
+.expand-toggle:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.expand-icon {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--transition-base);
+}
+
+.expand-toggle[aria-expanded="true"] .expand-icon {
+    transform: rotate(180deg);
+}
+
+.expand-toggle.hidden {
+    display: none;
+}
+
+/* Overdue Indicator */
+.overdue-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(196, 69, 54, 0.12);
+    color: #c44536;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: 8px;
+    margin-left: auto;
+}
+
+.overdue-indicator svg {
+    width: 16px;
+    height: 16px;
+}
+
+.overdue-indicator.hidden {
+    display: none;
+}
+
 /* Actions */
 .card-actions {
     display: flex;
@@ -507,4 +662,205 @@ body {
     .card-actions {
         display: none;
     }
+}
+
+/* Edit Mode Styles */
+.card-view-mode,
+.card-edit-mode {
+    transition: opacity var(--transition-base);
+}
+
+.card-view-mode.hidden,
+.card-edit-mode.hidden {
+    display: none;
+}
+
+.edit-form-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
+.form-group label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    padding: var(--space-sm) var(--space-md);
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: var(--color-card);
+    box-shadow: 0 0 0 3px rgba(212, 115, 75, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.form-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%236b5d54' d='M8 12L2 6h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-sm) center;
+    padding-right: 2.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+.form-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.form-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.save-btn {
+    background: var(--color-accent);
+    color: white;
+}
+
+.save-btn:hover {
+    background: var(--color-accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 115, 75, 0.3);
+}
+
+.save-btn:active {
+    transform: translateY(0);
+}
+
+.cancel-btn {
+    background: var(--color-bg);
+    color: var(--color-text-secondary);
+    border: 2px solid var(--color-border);
+}
+
+.cancel-btn:hover {
+    background: var(--color-card);
+    border-color: var(--color-text-muted);
+    color: var(--color-text-primary);
+}
+
+.form-btn:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* Responsive Adjustments for Edit Mode */
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-btn {
+        width: 100%;
+    }
+}
+
+/* Animation for mode switching */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-edit-mode {
+    animation: slideIn var(--transition-base) ease-out;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Enhanced Time Remaining States */
+.time-remaining-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: linear-gradient(135deg, var(--color-accent-light), rgba(244, 232, 227, 0.5));
+    border-radius: 10px;
+    margin-bottom: var(--space-lg);
+}
+
+.time-remaining-container.overdue-state {
+    background: linear-gradient(135deg, rgba(196, 69, 54, 0.12), rgba(196, 69, 54, 0.05));
+}
+
+.time-remaining-container.overdue-state .clock-icon {
+    color: #c44536;
+}
+
+.time-remaining-container.completed-state {
+    background: linear-gradient(135deg, rgba(123, 168, 141, 0.12), rgba(123, 168, 141, 0.05));
+}
+
+.time-remaining-container.completed-state .clock-icon {
+    color: var(--color-status-done);
 }

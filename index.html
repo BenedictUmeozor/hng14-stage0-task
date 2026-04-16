@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo Card - Editorial Design</title>
+    <title>Todo Card - Stage 1a Interactive</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -12,114 +12,232 @@
 <body>
     <div class="page-container">
         <article class="todo-card" data-testid="test-todo-card">
-            <!-- Header Section -->
-            <div class="card-header">
-                <div class="checkbox-wrapper">
-                    <input 
-                        type="checkbox" 
-                        id="todo-complete" 
-                        class="todo-checkbox"
-                        data-testid="test-todo-complete-toggle"
-                        aria-label="Mark task as complete"
+            <!-- Priority Indicator (Visual Accent) -->
+            <div class="priority-indicator" data-testid="test-todo-priority-indicator" aria-hidden="true"></div>
+            
+            <!-- View Mode -->
+            <div class="card-view-mode">
+                <!-- Header Section -->
+                <div class="card-header">
+                    <div class="checkbox-wrapper">
+                        <input 
+                            type="checkbox" 
+                            id="todo-complete" 
+                            class="todo-checkbox"
+                            data-testid="test-todo-complete-toggle"
+                            aria-label="Mark task as complete"
+                        >
+                        <label for="todo-complete" class="checkbox-label">
+                            <svg class="checkbox-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </label>
+                    </div>
+                    
+                    <div class="title-section">
+                        <h2 class="todo-title" data-testid="test-todo-title">
+                            Redesign landing page hero section
+                        </h2>
+                        <span class="status-badge" data-testid="test-todo-status" aria-label="Task status: In Progress">
+                            In Progress
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Description with Collapse -->
+                <div class="description-container">
+                    <div class="collapsible-section" data-testid="test-todo-collapsible-section">
+                        <p class="todo-description" data-testid="test-todo-description">
+                            Update the hero section with new brand guidelines, including typography refresh, 
+                            improved CTA placement, and mobile-optimized imagery. Ensure accessibility standards 
+                            are met and performance metrics stay under 2s LCP. This is a critical task that requires 
+                            coordination with the design team and careful testing across multiple devices and browsers.
+                        </p>
+                    </div>
+                    <button 
+                        class="expand-toggle" 
+                        data-testid="test-todo-expand-toggle"
+                        aria-expanded="false"
+                        aria-controls="collapsible-content"
                     >
-                    <label for="todo-complete" class="checkbox-label">
-                        <svg class="checkbox-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <span class="expand-text">Show more</span>
+                        <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Metadata Grid -->
+                <div class="metadata-grid">
+                    <div class="metadata-item">
+                        <span class="metadata-label">Priority</span>
+                        <span class="priority-badge priority-high" data-testid="test-todo-priority" aria-label="Priority level: High">
+                            <svg class="priority-icon" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                            </svg>
+                            High
+                        </span>
+                    </div>
+
+                    <div class="metadata-item">
+                        <span class="metadata-label">Status Control</span>
+                        <select 
+                            class="status-control" 
+                            data-testid="test-todo-status-control"
+                            aria-label="Change task status"
+                        >
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress" selected>In Progress</option>
+                            <option value="Done">Done</option>
+                        </select>
+                    </div>
+
+                    <div class="metadata-item">
+                        <span class="metadata-label">Due Date</span>
+                        <time class="due-date" datetime="2026-05-01T18:00:00Z" data-testid="test-todo-due-date">
+                            Due May 1, 2026
+                        </time>
+                    </div>
+                </div>
+
+                <!-- Time Remaining / Overdue -->
+                <div class="time-remaining-container">
+                    <svg class="clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
+                        Due in 18 days
+                    </span>
+                    <span class="overdue-indicator hidden" data-testid="test-todo-overdue-indicator" aria-label="Task is overdue">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        Overdue
+                    </span>
+                </div>
+
+                <!-- Tags -->
+                <ul class="tags-list" role="list" data-testid="test-todo-tags">
+                    <li class="tag" data-testid="test-todo-tag-work">
+                        <span class="tag-dot"></span>
+                        work
+                    </li>
+                    <li class="tag" data-testid="test-todo-tag-urgent">
+                        <span class="tag-dot"></span>
+                        urgent
+                    </li>
+                    <li class="tag">
+                        <span class="tag-dot"></span>
+                        design
+                    </li>
+                </ul>
+
+                <!-- Actions -->
+                <div class="card-actions">
+                    <button 
+                        class="action-btn edit-btn" 
+                        data-testid="test-todo-edit-button"
+                        aria-label="Edit task"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        Edit
+                    </button>
+                    <button 
+                        class="action-btn delete-btn" 
+                        data-testid="test-todo-delete-button"
+                        aria-label="Delete task"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                        Delete
+                    </button>
+                </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <form class="card-edit-mode hidden" data-testid="test-todo-edit-form">
+                <h3 class="edit-form-title">Edit Task</h3>
+                
+                <div class="form-group">
+                    <label for="edit-title">Title</label>
+                    <input 
+                        type="text" 
+                        id="edit-title" 
+                        class="form-input"
+                        data-testid="test-todo-edit-title-input"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-description">Description</label>
+                    <textarea 
+                        id="edit-description" 
+                        class="form-textarea"
+                        data-testid="test-todo-edit-description-input"
+                        rows="5"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-priority">Priority</label>
+                        <select 
+                            id="edit-priority" 
+                            class="form-select"
+                            data-testid="test-todo-edit-priority-select"
+                        >
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-due-date">Due Date</label>
+                        <input 
+                            type="datetime-local" 
+                            id="edit-due-date" 
+                            class="form-input"
+                            data-testid="test-todo-edit-due-date-input"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button 
+                        type="submit" 
+                        class="form-btn save-btn"
+                        data-testid="test-todo-save-button"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
-                    </label>
-                </div>
-                
-                <div class="title-section">
-                    <h2 class="todo-title" data-testid="test-todo-title">
-                        Redesign landing page hero section
-                    </h2>
-                    <span class="status-badge" data-testid="test-todo-status" aria-label="Task status: In Progress">
-                        In Progress
-                    </span>
-                </div>
-            </div>
-
-            <!-- Description -->
-            <p class="todo-description" data-testid="test-todo-description">
-                Update the hero section with new brand guidelines, including typography refresh, 
-                improved CTA placement, and mobile-optimized imagery. Ensure accessibility standards 
-                are met and performance metrics stay under 2s LCP.
-            </p>
-
-            <!-- Metadata Grid -->
-            <div class="metadata-grid">
-                <div class="metadata-item">
-                    <span class="metadata-label">Priority</span>
-                    <span class="priority-badge priority-high" data-testid="test-todo-priority" aria-label="Priority level: High">
-                        <svg class="priority-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        Save Changes
+                    </button>
+                    <button 
+                        type="button" 
+                        class="form-btn cancel-btn"
+                        data-testid="test-todo-cancel-button"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
-                        High
-                    </span>
+                        Cancel
+                    </button>
                 </div>
-
-                <div class="metadata-item">
-                    <span class="metadata-label">Due Date</span>
-                    <time class="due-date" datetime="2026-05-01T18:00:00Z" data-testid="test-todo-due-date">
-                        Due May 1, 2026
-                    </time>
-                </div>
-            </div>
-
-            <!-- Time Remaining -->
-            <div class="time-remaining-container">
-                <svg class="clock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <span class="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
-                    Due in 18 days
-                </span>
-            </div>
-
-            <!-- Tags -->
-            <ul class="tags-list" role="list" data-testid="test-todo-tags">
-                <li class="tag" data-testid="test-todo-tag-work">
-                    <span class="tag-dot"></span>
-                    work
-                </li>
-                <li class="tag" data-testid="test-todo-tag-urgent">
-                    <span class="tag-dot"></span>
-                    urgent
-                </li>
-                <li class="tag">
-                    <span class="tag-dot"></span>
-                    design
-                </li>
-            </ul>
-
-            <!-- Actions -->
-            <div class="card-actions">
-                <button 
-                    class="action-btn edit-btn" 
-                    data-testid="test-todo-edit-button"
-                    aria-label="Edit task"
-                >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
-                    Edit
-                </button>
-                <button 
-                    class="action-btn delete-btn" 
-                    data-testid="test-todo-delete-button"
-                    aria-label="Delete task"
-                >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                    </svg>
-                    Delete
-                </button>
-            </div>
+            </form>
         </article>
     </div>
 
